@@ -2,8 +2,8 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>別府市内のハナレザル</title>
-    <meta name="description" content="別府市内に出没するハナレザルの目撃情報" />
+    <title>別府市内のハナレザル目撃情報</title>
+    <meta name="description" content="別府市内に出没するサルの目撃情報" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <link rel="stylesheet" href="/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/bootstrap-theme.min.css">
@@ -15,6 +15,43 @@
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
     <script src="/js/bootstrap.min.js"></script>
+
+    <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDgpqkVUFH7rALyZwn1uRFF3h26WGqGXRA&sensor=false"></script>
+    <script type="text/javascript">
+      function initialize() {
+        var mapCenter = new google.maps.LatLng(33.284721, 131.491650);
+        var opts = {
+          center: mapCenter,
+          zoom: 14,
+          mapTypeId: google.maps.MapTypeId.ROADMAP
+        }
+        var thisMap = new google.maps.Map(document.getElementById("map"), opts);
+
+        function createMarker(map, lat, long, desc, timestamp) {
+          var posi = new google.maps.LatLng(lat, long);
+          var marker = new google.maps.Marker({
+            position: posi,
+            map: map,
+            title: "投稿日時:" + timestamp + "\n" + desc,
+            visible: true
+          });
+          marker.setMap(map);
+        }
+
+        $.getJSON('https://spreadsheets.google.com/feeds/list/14_g3kXZFjZGk2Tj6aF6PtDVgKTgtzeOsa6Ywx42yfFg/od6/public/values?alt=json', function(data) {
+          for (var i = 0; i < data.feed.entry.length; i++) {
+            var latitude  = data.feed.entry[i].gsx$latitude.$t;
+            var longitude = data.feed.entry[i].gsx$longitude.$t;
+            var desc      = data.feed.entry[i].gsx$desc.$t;
+            var timestamp = data.feed.entry[i].gsx$timestamp.$t;
+            createMarker(thisMap, latitude, longitude, desc, timestamp);
+          }
+        });
+
+      }
+    </script>
+
+
     <style type="text/css">
       body {
         font-size: 19px;
@@ -30,14 +67,20 @@
       .panel-danger {
         margin-top: 30px;
       }
+      #map-wrapper {
+        margin-top: 30px;
+      }
+      #map {
+        height: 450px;
+      }
     </style>
   </head>
-  <body>
+  <body onload="initialize()">
     <div class="container">
       <div class="row">
         <div class="col-xs-12 col-md-12 col-sm-12">
           <div class="jumbotron">
-            <h1>別府市内に出没するハナレザル</h1>
+            <h1>別府市内に出没するサル</h1>
             <p>別府市内にて市街地などに出没する "ハナレザル" が目撃されています、注意しましょう。</p>
           </div>
 
@@ -47,6 +90,18 @@
             <li><a href="/post.html">出没情報を投稿する</a></li>
             <li><a href="/about.html">このサイトについて</a></li>
           </ul>
+
+          <div class="panel panel-default" id="map-wrapper">
+            <div class="panel-heading">
+              <h3>サルの目撃情報</h3>
+              <p>
+
+              </p>
+            </div>
+            <div class="panel-body">
+              <div id="map"></div>
+            </div>
+          </div>
 
 
 

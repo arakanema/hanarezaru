@@ -87,7 +87,7 @@
               timeout: 10000,
               beforeSend: function (xhr, settings) {
                 $button.attr('disabled', true);
-                if (document.getElementById("when").value == "") {
+                if (document.getElementById("when").value === "") {
                   alert("マーカーを目撃場所に合わせ、いつ目撃したのか?記入してください！");
                   xhr.abort();
                   $button.attr('disabled', false);

@@ -49,36 +49,45 @@
         //}
 
         google.maps.event.addListener(marker, 'dragend', function(ev) {
-          var lat = ev.latLng.lat();
-          var lng = ev.latLng.lng();
-          $('latitude').value = lat;
-          $('longitude').value = lng;
+          //var lat = ev.latLng.lat();
+          //var lng = ev.latLng.lng();
+          //$('latitude').value = lat;
+          //$('longitude').value = lng;
           thisMap.panTo(marker.position);
         });
 
         google.maps.event.addListener(thisMap, 'center_changed', function() {
           window.setTimeout(function() {
-            var pos = thisMap.getCenter();
-            var lat = pos.lat();
-            var lng = pos.lng();
-            $('latitude').value = lat;
-            $('longitude').value = lng;
-            marker.setPosition(pos);
-          }, 1000);
+            //var pos = thisMap.getCenter();
+            //var lat = pos.lat();
+            //var lng = pos.lng();
+            //$('latitude').value = lat;
+            //$('longitude').value = lng;
+            //marker.setPosition(pos);
+            marker.setPosition(thisMap.getCenter());
+          }, 500);
         });
 
         $('#thisForm').submit(function (event) {
           event.preventDefault();
           var $form = $(this);
           var $button = $form.find('button');
+          var pos = thisMap.getCenter();
+          var lat = pos.lat();
+          var lng = pos.lng();
           $.ajax({
               url: $form.attr('action'),
               type: $form.attr('method'),
-              data: $form.serialize(),
+              //data: $form.serialize(),
+              data: {
+                latitude: lat,
+                longitude: lng,
+                when: getElementById('when').value.serialize()
+              },
               timeout: 10000,
               beforeSend: function (xhr, settings) {
                 $button.attr('disabled', true);
-                if ($("desc").value == undefined || $("latitude").value == undefined) {
+                if ($("when").value == undefined || $("latitude").value == undefined) {
                   alert("マーカーを目撃場所に合わせ、いつ目撃したのか?記入してください！");
                   xhr.abort();
                   $button.attr('disabled', false);
@@ -162,9 +171,11 @@
               </p>
               <form id="thisForm" class="form-inline" role="form" action="https://script.google.com/macros/s/AKfycbwoMr-MDQqao7Vzx5NsTXpCp8P0mblBt1LkOCNVW41qLScwFnM/exec" method="post">
                 <div class="form-group">
+                  <!--
                   <input type="text" class="form-control" id="latitude" name="latitude" readonly />
                   <input type="text" class="form-control" id="longitude" name="longitude" readonly />
-                  <textarea class="form-control" rows="1" id="desc" name="desc" placeholder="いつ目撃しましたか？"></textarea>
+                  -->
+                  <textarea class="form-control" rows="2" id="when" name="when" placeholder="いつ目撃しましたか？"></textarea>
                   <button type="submit" class="btn btn-info">投稿する</button>
                 </div>
               </form>

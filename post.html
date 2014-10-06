@@ -82,7 +82,7 @@
               data: {
                 latitude: lat,
                 longitude: lng,
-                when: getElementById('when').value.serialize()
+                when: $('when').value.serialize()
               },
               timeout: 10000,
               beforeSend: function (xhr, settings) {

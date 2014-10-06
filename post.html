@@ -27,7 +27,6 @@
         }
         var thisMap = new google.maps.Map(document.getElementById("map"), opts);
 
-        // ドラッグできるマーカーを表示
         var marker = new google.maps.Marker({
           position: mapCenter,
           title: "目撃場所",
@@ -35,37 +34,14 @@
         });
         marker.setMap(thisMap);
 
-        //function getAddress(lat, lng) {
-        //  var currentPosi = new google.maps.LatLng(lat, lng);
-        //  var gc = new google.maps.Geocoder();
-        //  gc.geocode({latLng: currentPosi}, function(results, status) {
-        //    if (status == google.maps.GeocoderStatus.OK && results[0]) {
-        //      var formatted_address = results[0].formatted_address.replace(/日本,.*大分県別府市/, "");
-        //      $("address").value = formatted_address;
-        //    } else {
-        //      console.log(status);
-        //    }
-        //  });
-        //}
-
         google.maps.event.addListener(marker, 'dragend', function(ev) {
-          //var lat = ev.latLng.lat();
-          //var lng = ev.latLng.lng();
-          //$('latitude').value = lat;
-          //$('longitude').value = lng;
           thisMap.panTo(marker.position);
         });
 
         google.maps.event.addListener(thisMap, 'center_changed', function() {
           window.setTimeout(function() {
-            //var pos = thisMap.getCenter();
-            //var lat = pos.lat();
-            //var lng = pos.lng();
-            //$('latitude').value = lat;
-            //$('longitude').value = lng;
-            //marker.setPosition(pos);
             marker.setPosition(thisMap.getCenter());
-          }, 500);
+          }, 700);
         });
 
         $('#thisForm').submit(function (event) {
@@ -78,7 +54,6 @@
           $.ajax({
               url: $form.attr('action'),
               type: $form.attr('method'),
-              //data: $form.serialize(),
               data: {
                 latitude: lat,
                 longitude: lng,
@@ -96,7 +71,6 @@
               complete: function (xhr, textStatus) {
                 $button.removeClass("btn-info");
                 $button.addClass("btn-success");
-                $button.attr('disabled', false);
                 $button.html("送信完了しました");
               },
               success: function (result, textStatus, xhr) {
@@ -166,7 +140,7 @@
               <p>
                 = 投稿手順 =<br/>
                 1. マーカーを目撃した場所へ合わせる<br/>
-                2. いつ頃目撃したのかを記入<br/>
+                2. いつ目撃したのかを記入<br/>
                 3. 投稿ボタンをクリック
               </p>
               <form id="thisForm" class="form-inline" role="form" action="https://script.google.com/macros/s/AKfycbwoMr-MDQqao7Vzx5NsTXpCp8P0mblBt1LkOCNVW41qLScwFnM/exec" method="post">

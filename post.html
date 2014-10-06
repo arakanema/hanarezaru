@@ -82,13 +82,13 @@
               data: {
                 latitude: lat,
                 longitude: lng,
-                when: $('when').value
+                when: document.getElementById("when").value
               },
               timeout: 10000,
               beforeSend: function (xhr, settings) {
                 $button.attr('disabled', true);
                 console.log($("when").value);
-                if ($("when").value == undefined) {
+                if (document.getElementById("when").value == undefined) {
                   alert("マーカーを目撃場所に合わせ、いつ目撃したのか?記入してください！");
                   xhr.abort();
                   $button.attr('disabled', false);
@@ -172,10 +172,6 @@
               </p>
               <form id="thisForm" class="form-inline" role="form" action="https://script.google.com/macros/s/AKfycbwoMr-MDQqao7Vzx5NsTXpCp8P0mblBt1LkOCNVW41qLScwFnM/exec" method="post">
                 <div class="form-group">
-                  <!--
-                  <input type="text" class="form-control" id="latitude" name="latitude" readonly />
-                  <input type="text" class="form-control" id="longitude" name="longitude" readonly />
-                  -->
                   <textarea class="form-control" rows="2" id="when" name="when" placeholder="いつ目撃しましたか？"></textarea>
                   <button type="submit" class="btn btn-info">投稿する</button>
                 </div>

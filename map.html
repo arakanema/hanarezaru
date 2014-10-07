@@ -35,6 +35,14 @@
             title: "投稿日時:" + timestamp + "\n" + when,
             visible: true
           });
+
+          google.maps.event.addListener(marker, "click", function() {
+            var infowindow = new google.maps.InfoWindow({
+              content: marker.title;
+            });
+            infowindow.open(map, marker);
+          });
+
           marker.setMap(map);
         }
 

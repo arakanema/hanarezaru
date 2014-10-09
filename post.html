@@ -16,6 +16,10 @@
     <![endif]-->
     <script src="./js/bootstrap.min.js"></script>
 
+    <script src="./js/bootstrap-datepicker.js"></script>
+    <script src="./js/bootstrap-datepicker.ja.js"></script>
+    <link rel="stylesheet" href="./css/datepicker3.css">
+
     <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDncbmsLp8scnsWaL1iQuVd_7DyLWOVuMk&sensor=false"></script>
     <script type="text/javascript">
       function initialize() {
@@ -85,6 +89,13 @@
           });
         });
 
+        $('#sandbox-container input').datepicker({
+            weekStart: 1,
+            language: "ja",
+            orientation: "bottom auto",
+            todayHighlight: true
+        });
+
       }
     </script>
 
@@ -139,19 +150,23 @@
               <h3>目撃情報を投稿する</h3>
               <p>
                 <span class="glyphicon glyphicon-map-marker"></span> 投稿手順<br/>
-                1. マーカーを目撃した場所へ合わせる<br/>
-                2. いつ目撃したのかを記入<br/>
+                1. マーカーを目撃地点へ<br/>
+                2. いつ目撃したのかを選択<br/>
                 3. 投稿ボタンをクリック
               </p>
-              <form id="thisForm" class="form-inline" role="form" action="https://script.google.com/macros/s/AKfycbwoMr-MDQqao7Vzx5NsTXpCp8P0mblBt1LkOCNVW41qLScwFnM/exec" method="post">
-                <div class="form-group">
-                  <textarea class="form-control" rows="2" id="when" name="when" placeholder="いつ目撃しましたか？"></textarea>
-                  <button type="submit" class="btn btn-info">投稿する</button>
-                </div>
-              </form>
             </div>
             <div class="panel-body">
               <div id="map"></div>
+
+              <form id="thisForm" class="form-inline" role="form" action="https://script.google.com/macros/s/AKfycbwoMr-MDQqao7Vzx5NsTXpCp8P0mblBt1LkOCNVW41qLScwFnM/exec" method="post">
+                <div class="form-group">
+                  <div id="sandbox-container">
+                    <input type="text" type="text" class="form-control" id="when" name="when" placeholder="いつ目撃しましたか？">
+                  </div>
+                  <button type="submit" class="btn btn-info">投稿する</button>
+                </div>
+              </form>
+
             </div>
           </div>
 

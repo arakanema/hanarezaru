@@ -27,11 +27,10 @@
         }
         var thisMap = new google.maps.Map(document.getElementById("map"), opts);
 
-        function createMarker(map, lat, long, when, timestamp) {
+        function createMarker(map, lat, long, when) {
           var posi = new google.maps.LatLng(lat, long);
           var marker = new google.maps.Marker({
             position: posi,
-            animation: google.maps.Animation.DROP,
             map: map,
             title: when,
             visible: true
@@ -52,8 +51,7 @@
             var latitude  = data.feed.entry[i].gsx$latitude.$t;
             var longitude = data.feed.entry[i].gsx$longitude.$t;
             var when      = data.feed.entry[i].gsx$when.$t;
-            var timestamp = data.feed.entry[i].gsx$timestamp.$t;
-            createMarker(thisMap, latitude, longitude, when, timestamp);
+            createMarker(thisMap, latitude, longitude, when);
           }
         });
 

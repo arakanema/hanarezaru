@@ -50,8 +50,8 @@
           for (var i = 0; i < data.feed.entry.length; i++) {
             var latitude  = data.feed.entry[i].gsx$latitude.$t;
             var longitude = data.feed.entry[i].gsx$longitude.$t;
-            var sightDate = data.feed.entry[i].gsx$sightDate.$t;
-            var sightTime = data.feed.entry[i].gsx$sightTime.$t;
+            var sightDate = data.feed.entry[i].gsx$sightdate.$t;
+            var sightTime = data.feed.entry[i].gsx$sighttime.$t;
             createMarker(thisMap, latitude, longitude, sightDate, sightTime);
           }
         });

@@ -32,7 +32,7 @@
               $(destID).append($('<option>').html(ymd).val(ymd));
             }
           }
-          $(destID).append($('<option selected>').html("").val(""));
+          $(destID).prepend($('<option selected>').html("").val(""));
         }
         setDateSelect(new Date(), "#sightDate");
 
@@ -81,7 +81,7 @@
               beforeSend: function (xhr, settings) {
                 $button.attr('disabled', true);
                 if (document.getElementById("sightDate").value === "" || document.getElementById("sightTime").value === "") {
-                  alert("マーカーを目撃場所に合わせ、いつ目撃したのか?記入してください！");
+                  alert("マーカーを目撃場所に合わせ、いつ目撃したのか選択してください！");
                   xhr.abort();
                   $button.attr('disabled', false);
                 }

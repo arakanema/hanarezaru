@@ -16,13 +16,26 @@
     <![endif]-->
     <script src="./js/bootstrap.min.js"></script>
 
-    <script src="./js/bootstrap-datepicker.js"></script>
-    <script src="./js/bootstrap-datepicker.ja.js"></script>
-    <link rel="stylesheet" href="./css/datepicker3.css">
-
     <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDncbmsLp8scnsWaL1iQuVd_7DyLWOVuMk&sensor=false"></script>
     <script type="text/javascript">
       function initialize() {
+        function setDateSelect (today, destID) {
+          for (var i = 0; i < 5; i++) {
+            var dateForAdd = new Date(today.getTime() - i * (60*60*24*1000));
+            var y = dateForAdd.getFullYear();
+            var m = dateForAdd.getMonth() + 1;
+            var d = dateForAdd.getDate();
+            var ymd = y + "/" + m + "/" + d;
+            if (i == 0) {
+              $(destID).append($('<option>').html(ymd + "(今日)").val(ymd));
+            } else {
+              $(destID).append($('<option>').html(ymd).val(ymd));
+            }
+          }
+          $(destID).append($('<option selected>').html("").val(""));
+        }
+        setDateSelect(new Date(), "#sightDate");
+
         var mapCenter = new google.maps.LatLng(33.284721, 131.491650);
         var opts = {
           center: mapCenter,
@@ -61,12 +74,13 @@
               data: {
                 latitude: lat,
                 longitude: lng,
-                when: document.getElementById("when").value
+                sightDate: document.getElementById("sightDate").value,
+                sightTime: document.getElementById("sightTime").value
               },
               timeout: 10000,
               beforeSend: function (xhr, settings) {
                 $button.attr('disabled', true);
-                if (document.getElementById("when").value === "") {
+                if (document.getElementById("sightDate").value === "" || document.getElementById("sightTime").value === "") {
                   alert("マーカーを目撃場所に合わせ、いつ目撃したのか?記入してください！");
                   xhr.abort();
                   $button.attr('disabled', false);
@@ -87,12 +101,6 @@
                //$("post-error").show();
               }
           });
-        });
-
-        $('#sandbox-container input').datepicker({
-            weekStart: 1,
-            language: "ja",
-            todayHighlight: true
         });
 
       }
@@ -122,6 +130,9 @@
       }
       .post-msg {
         display: none;
+      }
+      .submit-wrap {
+        margin-top: 10px;
       }
     </style>
   </head>
@@ -159,9 +170,29 @@
 
               <form id="thisForm" class="form-inline" role="form" action="https://script.google.com/macros/s/AKfycbwoMr-MDQqao7Vzx5NsTXpCp8P0mblBt1LkOCNVW41qLScwFnM/exec" method="post">
                 <div class="form-group">
-                  <div id="sandbox-container">
-                    <input type="text" type="text" class="form-control" id="when" name="when" placeholder="いつ目撃しましたか？">
-                  </div>
+                  <label for="sightDate">いつ目撃しましたか？</label>
+                  <select id="sightDate" name="sightDate">
+                  </select>
+                  <select id="sightTime" name="sightTime">
+                    <option value="" selected></option>
+                    <option value="06:00">06:00</option>
+                    <option value="07:00">07:00</option>
+                    <option value="08:00">08:00</option>
+                    <option value="09:00">09:00</option>
+                    <option value="10:00">10:00</option>
+                    <option value="11:00">11:00</option>
+                    <option value="12:00">12:00</option>
+                    <option value="13:00">13:00</option>
+                    <option value="14:00">14:00</option>
+                    <option value="15:00">15:00</option>
+                    <option value="16:00">16:00</option>
+                    <option value="17:00">17:00</option>
+                    <option value="18:00">18:00</option>
+                    <option value="19:00">19:00</option>
+                    <option value="20:00">20:00</option>
+                    <option value="21:00">21:00</option>
+                    <option value="22:00">22:00</option>
+                  </select>
                   <button type="submit" class="btn btn-info">投稿する</button>
                 </div>
               </form>
